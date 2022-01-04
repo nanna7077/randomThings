@@ -96,7 +96,7 @@
                     if (folders['tree'][key]['path'] === "index.html") {
                         console.log(0);
                     } else {
-                        document.getElementById('folderdisplay').innerHTML += "<a class='folder' href='" + baseUrl + folders['tree'][key]['path'] + "' target='_blank'>" + folders['tree'][key]['path'] + "</a><br><br>";
+                        document.getElementById('folderdisplay').innerHTML += "<a class='folder' href='" + baseUrl +"/html/" + folders['tree'][key]['path'] + "' target='_blank'>" + folders['tree'][key]['path'] + "</a><br><br>";
                         document.getElementById('sourcelinks').innerHTML += "<a class='folder' href='" + baseUrl_repo + "/html/" + folders['tree'][key]['path'] + "' target='_blank'>" + folders['tree'][key]['path'] + "</a><br><br>";
                     }
                 })

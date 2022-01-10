@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <title>Just the page</title>
+</head>
+
+<style>
+    #major {
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        background-color: rgba(255, 255, 255, 0.6);
+        position: sticky;
+        top: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    #logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    #desc {
+        font-size: 1rem;
+    }
+    
+    #url {
+        border: none;
+        border-bottom: 1px solid #ff00bb;
+        font-size: 1.2rem;
+        text-align: center;
+        width: 90%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    #url:focus {
+        outline: none;
+        border-bottom: 2px solid #ff00bb;
+    }
+    
+    #goButton {
+        background-color: #ff00bb;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        font-size: 1rem;
+        padding: 5 5 5 5;
+        cursor: pointer;
+        border-radius: 6px;
+    }
+    
+    #goButton:hover {
+        padding: 7 7 7 7;
+        font-weight: bold;
+    }
+    
+    #actionmsg {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+    
+    #displaythepage {
+        border: none;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <div id="major">
+        <div id="logo">Just the Page</div>
+        <div style="width: 80%;">
+            <input id="url" autocomplete="off">
+            <div id="actionmsg"></div>
+        </div>
+        <button id="goButton" onclick="bypass()">Get Page</button>
+    </div>
+    <br>
+    <iframe id="displaythepage" width="100%" height="90%"></iframe>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js"></script>
+<script>
+    const {
+        stripHtml
+    } = stringStripHtml;
+
+    document.getElementById("displaythepage").src = "";
+
+    function bypass() {
+        document.getElementById("actionmsg").innerText = "Fetching Web Page...";
+        fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(document.getElementById("url").value)).then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw new Error("Could not fetch page")
+                return undefined;
+            }
+        }).then(data => {
+            if (data[Object.keys(data)[0]] === null) {
+                document.getElementById("actionmsg").innerText = "Could not fetch page. Check the URL given.";
+                return
+            }
+            document.getElementById("actionmsg").innerText = "";
+            var content = data[Object.keys(data)[0]].replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+            document.getElementById("displaythepage").contentWindow.document.write(content);
+        })
+    }
+</script>
+
+</html>

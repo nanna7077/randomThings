@@ -89,6 +89,13 @@
 
     document.getElementById("displaythepage").src = "";
 
+    var url = new URL(window.location.href);
+    var link = url.searchParams.get("link");
+    if (link !== null) {
+        document.getElementById("url").value = link;
+        bypass();
+    }
+
     function bypass() {
         document.getElementById("actionmsg").innerText = "Fetching Web Page...";
         fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(document.getElementById("url").value)).then(response => {

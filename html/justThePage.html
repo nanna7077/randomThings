@@ -21,6 +21,7 @@
     #logo {
         font-size: 1.5rem;
         font-weight: bold;
+        cursor: pointer;
     }
     
     #desc {
@@ -52,6 +53,19 @@
         border-radius: 6px;
     }
     
+    #shareButton {
+        background-color: #ff00bb;
+        border: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        font-size: 1rem;
+        padding: 5 5 5 5;
+        cursor: pointer;
+        border-radius: 6px;
+        margin-left: 2vh;
+        display: none;
+    }
+    
     #goButton:hover {
         padding: 7 7 7 7;
         font-weight: bold;
@@ -70,12 +84,13 @@
 
 <body>
     <div id="major">
-        <div id="logo">Just the Page</div>
+        <div id="logo" onclick="cleanup()">Just the Page</div>
         <div style="width: 80%;">
             <input id="url" autocomplete="off">
             <div id="actionmsg"></div>
         </div>
         <button id="goButton" onclick="bypass()">Get Page</button>
+        <button id="shareButton" onclick="share()">Share</button>
     </div>
     <br>
     <iframe id="displaythepage" width="100%" height="90%"></iframe>
@@ -96,6 +111,16 @@
         bypass();
     }
 
+    function cleanup() {
+        document.getElementById("displaythepage").src = "";
+        document.getElementById("url").value = "";
+        document.location.href = url.pathname;
+    }
+
+    function share() {
+        navigator.clipboard.writeText(url.pathname + "?link=" + document.getElementById("url").value);
+    }
+
     function bypass() {
         document.getElementById("actionmsg").innerText = "Fetching Web Page...";
         fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(document.getElementById("url").value)).then(response => {
@@ -113,6 +138,7 @@
             document.getElementById("actionmsg").innerText = "";
             var content = data[Object.keys(data)[0]].replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
             document.getElementById("displaythepage").contentWindow.document.write(content);
+            document.getElementById("shareButton").style.display = 'block';
         })
     }
 </script>

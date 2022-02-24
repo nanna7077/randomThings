@@ -118,7 +118,7 @@
     }
 
     function share() {
-        navigator.clipboard.writeText(url.pathname + "?link=" + document.getElementById("url").value);
+        navigator.clipboard.writeText(url + "?link=" + document.getElementById("url").value);
         document.getElementById("actionmsg").innerText = "Link copied to clipboard!";
     }
 
